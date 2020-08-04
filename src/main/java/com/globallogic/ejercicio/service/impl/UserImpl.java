@@ -27,7 +27,7 @@ public class UserImpl implements UserService {
 
 	@Override
 	public UserEntity processData(User us) {
-		log.info("processData: " + us);
+		log.debug("processData: " + us);
 		UserEntity user = new UserEntity();
 		BeanUtils.copyProperties(us, user);
 		LocalDate date = LocalDate.now();
@@ -35,16 +35,13 @@ public class UserImpl implements UserService {
 		user.setModified(date);
 		user.setLastLogin(date);
 		user.setActive(Boolean.TRUE);
-//		List<PhoneEntity> list = new ArrayList<>();
-
 		user.setPhones(ConvertPhone.setListaPhoneDto(us.getPhones()));
-		log.info("GUARDARRRRR ----: " + user);
 		return user;
 	}
 
 	@Override
 	public UserEntity findByEmail(String email) {
-		log.info("findByEmail: " + email);
+		log.debug("findByEmail: " + email);
 		return this.userRepository.findByEmail(email);
 	}
 

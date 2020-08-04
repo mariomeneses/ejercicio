@@ -61,7 +61,6 @@ public class Controller {
 		} else {
 			throw new BadRequestException("El correo ya	se encuentra registrado");
 		}
-		log.info("GUARDARRRRR ----: " + usr);
 		BeanUtils.copyProperties(this.userService.save(us), usr);
 		return new ResponseEntity<>(usr, HttpStatus.CREATED);
 	}

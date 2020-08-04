@@ -20,7 +20,7 @@ public @interface UserValidator {
 
 	String message()
 
-	default "No es posible agregar el dato, favor intente más tarde (COD : 1)";
+	default "Error";
 
 	Class<?>[] groups() default {};
 
