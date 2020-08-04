@@ -4,7 +4,6 @@ import static java.util.Objects.isNull;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +16,7 @@ import com.globallogic.ejercicio.dto.User;
 import com.globallogic.ejercicio.entity.UserEntity;
 import com.globallogic.ejercicio.exception.BadRequestException;
 import com.globallogic.ejercicio.service.UserService;
+import com.globallogic.ejercicio.util.ConvertUser;
 import com.globallogic.ejercicio.validator.ValidateField;
 
 import lombok.extern.log4j.Log4j2;
@@ -61,8 +61,8 @@ public class Controller {
 		} else {
 			throw new BadRequestException("El correo ya	se encuentra registrado");
 		}
-		BeanUtils.copyProperties(this.userService.save(us), usr);
-		return new ResponseEntity<>(usr, HttpStatus.CREATED);
+
+		return new ResponseEntity<>(ConvertUser.setUserDto(this.userService.save(us)), HttpStatus.CREATED);
 	}
 
 }
