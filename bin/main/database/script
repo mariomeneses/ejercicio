@@ -1,0 +1,60 @@
+-- Database: ejercicio
+
+-- DROP DATABASE ejercicio;
+
+CREATE DATABASE ejercicio
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Chile.1252'
+    LC_CTYPE = 'Spanish_Chile.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+    
+--  Drop Foreign Key Constraints 
+--ALTER TABLE phones DROP CONSTRAINT FK_phones_user;
+
+--  Drop Tables, Stored Procedures and Views 
+--DROP TABLE IF EXISTS phones;
+--DROP TABLE IF EXISTS usr;
+
+--  Create Tables 
+
+CREATE TABLE usr ( 
+    usr_uuid character varying(250) COLLATE pg_catalog."default" NOT NULL,
+    usr_name character varying(100) COLLATE pg_catalog."default",
+    usr_email character varying(100) COLLATE pg_catalog."default",
+    usr_password character varying(100) COLLATE pg_catalog."default",
+    usr_created date,
+    usr_modified date,
+    usr_lastlogin date,
+    usr_isactive boolean
+);
+
+CREATE TABLE phones ( 
+	pho_uuid varchar(250) NOT NULL,
+	pho_number varchar(50) NULL,
+	pho_citycode varchar(50) NULL,
+	pho_countrycode varchar(50) NULL,
+	pho_usr_uuid varchar(250) NULL
+);
+
+--  Create Primary Key Constraints 
+ALTER TABLE phones ADD CONSTRAINT PK_phones 
+	PRIMARY KEY (pho_uuid);
+
+
+ALTER TABLE usr ADD CONSTRAINT PK_user 
+	PRIMARY KEY (usr_uuid);
+
+--  Create Indexes 
+ALTER TABLE phones
+	ADD CONSTRAINT UQ_phones_pho_uuid UNIQUE (pho_uuid);
+	
+ALTER TABLE usr
+	ADD CONSTRAINT UQ_user_usr_uuid UNIQUE (usr_uuid);
+
+--  Create Foreign Key Constraints 
+ALTER TABLE phones ADD CONSTRAINT FK_phones_user 
+	FOREIGN KEY (pho_usr_uuid) REFERENCES usr (usr_uuid);
+    
